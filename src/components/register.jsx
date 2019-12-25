@@ -3,7 +3,7 @@ import '../styles/login.css'
 import axios from 'axios'
 import whitelogo from '../assets/img/Arkademy-Putih.svg'
 import hirevector from '../assets/img/vector-hiring.png'
-import SweetAlert from 'sweetalert2-react';
+import SweetAlert from 'sweetalert2-react'
 
 class Register extends Component{
    
@@ -60,13 +60,13 @@ class Register extends Component{
                             Register
                         </h1>
                         <form className="mt-5 ml-4 mr-4 pt-4" method="POST" onSubmit={(e) => this.handleRegister(e)}>
-                            <div className="form-group">
                             <SweetAlert
                                 show={this.state.show}
                                 title="Registration completed successfully"
                                 text="Go to the login page"
                                 onConfirm={() => this.setState({ show: false })}
                             />
+                            <div className="form-group">
                                 <label className="text-dark" for="exampleInputEmail1">Email address</label>
                                 <input type="email" name="email" onChange={ (e) => { this.setState({ email: e.target.value })}} className="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="Enter email" required></input>
                             </div>

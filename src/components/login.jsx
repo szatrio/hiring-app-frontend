@@ -2,9 +2,44 @@ import React, { Component } from 'react'
 import '../styles/login.css'
 import whitelogo from '../assets/img/Arkademy-Putih.svg'
 import hirevector from '../assets/img/vector-hiring.png'
+import  axios from 'axios'
+import SweetAlert from 'sweetalert2-react'
 
 class Login extends Component{
-   render(){
+    constructor(){
+        super()
+        this.state = {
+          email: null,
+          password: null,
+          role: null,
+          show: false
+        }
+      }
+    
+    handleLogin(e){
+        e.preventDefault()
+        const api = 'http://localhost:8000/user/login'
+        const data = {
+            email : this.state.email,
+            password : this.state.password,
+        }
+        // console.log("kkkk", data)
+        axios.post(api, data)
+        .then(res => {
+            this.setState({show: true})
+            localStorage.setItem('token', res.data.data.token)
+            localStorage.setItem('id_user', res.data.data.id_user)
+            localStorage.setItem('email', res.data.data.email)
+            localStorage.setItem('role', res.data.data.role)
+            console.log(localStorage,"aaaaaaaaaaaaaa")
+            this.props.history.push("/");
+        })
+        .catch(err =>{
+            console.log(err)
+        })
+    }
+
+    render(){
        return(
         <div>
             <div className="row" id="ground">              
@@ -24,14 +59,20 @@ class Login extends Component{
                         <h1 className="mt-4 ml-4 pb-5 text-left text-dark">
                             Login
                         </h1>
-                        <form className="mt-5 ml-4 mr-4 pt-4">
+                        <form className="mt-5 ml-4 mr-4 pt-4" method="POST" onSubmit={(e) => this.handleLogin(e)}>
+                            <SweetAlert
+                                show={this.state.show}
+                                title="Login Succesfully"
+                                text="Welcome"
+                                onConfirm={() => this.setState({ show: false })}
+                            />
                             <div className="form-group">
                                 <label className="text-dark" for="exampleInputEmail1">Email address</label>
-                                <input type="email" className="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="Enter email"></input>
+                                <input type="email" className="form-control" onChange={(e) => { this.setState({ email: e.target.value})}} id="InputEmail" aria-describedby="emailHelp" placeholder="Enter email"></input>
                             </div>
                             <div className="form-group">
                                 <label className="text-dark" for="exampleInputPassword1">Password</label>
-                                <input type="password" className="form-control" id="InputPassword" placeholder="Password"></input>
+                                <input type="password" className="form-control" onChange={(e) => { this.setState({ password: e.target.value})}} id="InputPassword" placeholder="Password"></input>
                             </div>
                             <div className="text-dark text-right">
                                 <a href="/">

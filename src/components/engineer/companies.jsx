@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Header from '../header'
 import Cards from './cards'
 import axios from 'axios'
+import getJwt from '../../helpers/jwt'
 
 export default class Companies extends Component{
     constructor(){
@@ -16,7 +17,9 @@ export default class Companies extends Component{
     }
 
     getCompanies(url){
-        axios.get(url)
+        const jwt = getJwt()
+        console.log(jwt,"kkkkkkkkkkkkkkkkkkkkkkkkk")
+        axios.get(url, { headers: { Authorization: `Bearer ${jwt.token}`}})
         .then(res =>{
             // console.log("lllllllllllllllllllll", res.data.data)
             this.setState({
