@@ -1,39 +1,27 @@
 import React, { Component } from 'react'
+import Header from '../header'
 import '../../styles/engineers.css'
-import arkademy from '../../assets/img/arkademy-logo.png'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faCommentDots, faBell } from '@fortawesome/free-solid-svg-icons'
+// import { Card } from 'react-bootstrap'
+// import axios from 'axios'
+
 
 class Engineers extends Component{
-   render(){
+   
+    
+    
+    
+    render(){
        return(
         <div>
-             <nav class="navbar navbar-expand-lg navbar-light bg-light p">
-                    <div>    
-                        <img src={arkademy} width="100" alt="navbar"></img>
-                    </div>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">
-                            <FontAwesomeIcon icon={faSearch} />
-                            </span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1"></input>
-                    </div>
-                    <div className="navbar-nav ml-4 mr-auto">
-                        <p className="text-dark mt-3">Home</p>
-                        <img src="https://www.pinterpolitik.com/wp-content/uploads/2018/02/Photo-Soekarno.jpg" className="ml-4" alt="" id="profilepic"/>
-                        <p className="text-dark ml-2 mt-3">Nama</p>
-                        <div className="ml-4 mr-4" id="GrayLine"></div>
-                        <div className="mt-3 ml-4">
-                            <FontAwesomeIcon icon={faCommentDots} size="lg"/>
-                        </div>
-                        <div className="mt-3 ml-4 mr-4">
-                            <FontAwesomeIcon icon={faBell} size="lg"/>
-                        </div>
-                    </div>
-             </nav>
-             
+            <Header />
+            <div className="card" id="cardProfile">
+                <img src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" className="card-img-top" alt=""></img>
+                <div className="card-body">
+                    <h5 className="card-title">Card title</h5>
+                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="/" className="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
         </div>
        )
    }

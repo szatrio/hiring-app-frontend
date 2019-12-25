@@ -28,17 +28,15 @@ class Register extends Component{
         axios.post(api, data)
         .then(res => {
           console.log(res)
-          this.setState({registerMessage: res.data.message})
+          this.setState({show: true})
+          
         })
         .catch(err => {
           console.log(err)
         })
       }
 
-    // registPlusalert(e){
-    //     (e) => this.handleRegister(e);
-    //     () => this.setState({ show: true });
-    // }
+  
 
     render(){
        return(
@@ -65,8 +63,8 @@ class Register extends Component{
                             <div className="form-group">
                             <SweetAlert
                                 show={this.state.show}
-                                title="Demo"
-                                text="SweetAlert in React"
+                                title="Registration completed successfully"
+                                text="Go to the login page"
                                 onConfirm={() => this.setState({ show: false })}
                             />
                                 <label className="text-dark" for="exampleInputEmail1">Email address</label>
