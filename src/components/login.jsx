@@ -5,6 +5,40 @@ import hirevector from '../assets/img/vector-hiring.png'
 import  axios from 'axios'
 import SweetAlert from 'sweetalert2-react'
 
+
+const checkRole = (role, id_user, token, props) =>{
+    if (role === 1){
+        axios.get('http://localhost:8000/company', { headers: { Authorization: `Bearer ${token}`}})
+        .then( res => {
+            console.log(res.data.data,"zzzzzzzzzzzzzzzzzzzzz")
+            if(res.data.data.filter(response => response.id_user === id_user).length > 0 ){
+                props.history.push("/engineers")
+            }else{
+                props.history.push("/company/myprofile")
+            }
+        })
+        .catch(err =>{
+            console.log(err)
+        })
+    }
+    else if(role === 2){
+        axios.get('http://localhost:8000/engineer', { headers: { Authorization: `Bearer ${token}`}})
+        .then( res => {
+            console.log(res.data,"zzzzzzzzzzzzzzzzzzzzz")
+            if(res.data.data.filter(response => response.id_user === id_user).length > 0 ){
+                props.history.push("/companies")
+            }else{
+                props.history.push("/engineer/myprofile")
+            }
+        })
+        .catch(err =>{
+            console.log(err)
+        })
+    }else{
+      	console.log("error")
+    }
+}
+
 class Login extends Component{
     constructor(){
         super()
@@ -31,13 +65,15 @@ class Login extends Component{
             localStorage.setItem('id_user', res.data.data.id_user)
             localStorage.setItem('email', res.data.data.email)
             localStorage.setItem('role', res.data.data.role)
-            console.log(localStorage,"aaaaaaaaaaaaaa")
-            this.props.history.push("/companies");
+            // console.log(localStorage,"aaaaaaaaaaaaaa")
+            checkRole(res.data.data.role, res.data.data.id_user, res.data.data.token, this.props)
+            // this.props.history.push("/companies")
         })
         .catch(err =>{
             console.log(err)
         })
     }
+
 
     render(){
        return(
