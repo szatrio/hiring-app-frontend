@@ -32,7 +32,7 @@ class Login extends Component{
             localStorage.setItem('email', res.data.data.email)
             localStorage.setItem('role', res.data.data.role)
             console.log(localStorage,"aaaaaaaaaaaaaa")
-            this.props.history.push("/");
+            this.props.history.push("/companies");
         })
         .catch(err =>{
             console.log(err)
