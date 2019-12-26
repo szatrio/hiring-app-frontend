@@ -25,7 +25,7 @@ const checkRole = (role, id_user, token, props) =>{
         axios.get('http://localhost:8000/engineer', { headers: { Authorization: `Bearer ${token}`}})
         .then( res => {
             console.log(res.data,"zzzzzzzzzzzzzzzzzzzzz")
-            if(res.data.data.filter(response => response.id_user === id_user).length > 0 ){
+            if(res.data.response.filter(response => response.id_user === id_user).length > 0 ){
                 props.history.push("/companies")
             }else{
                 props.history.push("/engineer/myprofile")
