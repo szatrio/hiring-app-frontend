@@ -2,10 +2,15 @@ import React, { Component } from 'react'
 import '../styles/header.css'
 import arkademy from '../assets/img/arkademy-logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faCommentDots, faBell } from '@fortawesome/free-solid-svg-icons'
-
+import { faCommentDots, faBell } from '@fortawesome/free-solid-svg-icons'
+import SearchField from './searchfilter'
 class header extends Component{
-   render(){
+    
+    
+    setDataFromSearch = (searchData) => {
+        this.props.getDataFromHeader(searchData) 
+      }
+    render(){
        return(
         <div>
              <nav className="navbar navbar-expand-lg navbar-light bg-light p">
@@ -13,13 +18,17 @@ class header extends Component{
                         <img src={arkademy} width="100" alt="navbar"></img>
                     </div>
                     <div className="input-group">
-                        <div className="input-group-prepend">
+                        {/* <div className="input-group-prepend">
                             <span className="input-group-text" id="basic-addon1">
                             <FontAwesomeIcon icon={faSearch} />
                             </span>
+                        </div> */}
+                        {this.props.searchBar === true ?
+                        <SearchField getDataFromSearch={this.setDataFromSearch} onChange={this.setDataFromSearch}  />   
+                        :
+                            <div></div>
+                        }
                         </div>
-                        <input type="text" className="form-control" placeholder="Search" aria-label="Search" aria-describedby="basic-addon1" id="searchbar"></input>
-                    </div>
                     <div className="navbar-nav ml-4 mr-auto">
                         <p className="text-dark mt-3">Home</p>
                         <img src="https://www.pinterpolitik.com/wp-content/uploads/2018/02/Photo-Soekarno.jpg" className="ml-4" alt="" id="profilepic"/>

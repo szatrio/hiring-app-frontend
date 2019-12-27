@@ -1,5 +1,12 @@
 #searchbar{
-    width: 600px;
+  width: 600px;
+  box-shadow: none;
+  outline: none;
+}
+
+#searchbar:focus{
+    box-shadow: none;
+    outline: none;
 }
 
 .input-group .input-group-text {
@@ -34,9 +41,4 @@
 #GrayLine{
     border-left: 1px solid rgb(204, 201, 201);
     height: 50px;
-}
-
-#searchbar:focus{
-  box-shadow: none;
-  outline: none;
 }
