@@ -4,7 +4,7 @@ import Cards from './cards'
 // import Filter from '../filter'
 import axios from 'axios'
 import getJwt from '../../helpers/jwt'
-import { ButtonGroup, Button, DropdownButton, Col, Card, Form, InputGroup, FormControl } from 'react-bootstrap'
+import { Row, ButtonGroup, Button, DropdownButton, Col, Card, Form, InputGroup, FormControl } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
@@ -13,7 +13,8 @@ export default class Engineers extends Component{
         super()
         this.state = {
             engineersList: [],
-            pageDetail: [],
+            pages: [],
+            total: [],
             page: 1,
             sort_by: 'date_updated',
             order: 'ASC',
@@ -56,7 +57,7 @@ export default class Engineers extends Component{
     }
 
     page = (e) => {
-        console.log(e, "eeeeee")
+        // console.log(e)
         if(e === 'prev'){
             this.setState({page: this.state.page-1})
         }else if(e === 'next'){
@@ -71,11 +72,13 @@ export default class Engineers extends Component{
         // console.log(jwt,"kkkkkkkkkkkkkkkkkkkkkkkkk")
         axios.get(url, { headers: { Authorization: `Bearer ${jwt.token}`}})
         .then(res =>{
-            console.log("lllllllllllllllllllll", res.data.page)
+            console.log("lllllllllllllllllllll", res.data)
             this.setState({
+                pages: res.data.pages,
+                total: res.data.total,
                 engineersList : res.data.response,
-                pageDetail: res.data.page
             })
+            console.log(this.state.pages,"kkkkkkkkkkkjjj")
         })
         .catch(err =>{
             this.setState({
@@ -86,13 +89,13 @@ export default class Engineers extends Component{
 
     setData = ( searchName, searchSkill, sort_by, order, limit, page ) => {
         console.log(searchSkill)       
-        this.getEngineers(`http://localhost:8000/engineer?${searchName}&limit=${limit}&page=${page}${searchSkill}&sort_by=${sort_by}&order=${order}`)
+        this.getEngineers(`http://localhost:8000/engineer?${searchName}&limit=${limit}&page=${page}&${searchSkill}&sort_by=${sort_by}&order=${order}`)
     }
     // +'&page=1&sort_by='+sort_by+'&order='+order+'&limit='+limit
     // console.log(search,"lllllllllll", )
 
     render(){
-        console.log(this.state, "jhkjhbljhkhnkhnjnh")
+        console.log(this.state,"eeeeeeeeeeeee")
         return(
             <>
                 <Header getDataFromHeader={this.searchName} searchBar={true} />
@@ -121,13 +124,46 @@ export default class Engineers extends Component{
                                 <InputGroup as={Col} className="mr-auto" md="2">
                                     <FormControl onChange={(e) => {this.limit(e.target.value)}} type="text" placeholder="Limit per page" id="searchbar" />
                                 </InputGroup>
-                                 <Col md='4'>
+                                 <Col md='4' className="ml-auto">
                                     <ButtonGroup>
                                         <Button variant="dark" onClick={(e) => {this.page(e.target.name)}} name="prev">Prev</Button>
-                                        <Button variant="outline-dark" className="pr-5 pl-5" disabled>{this.state.pageDetail}</Button>
+                                        <Button variant="outline-dark" className="pr-5 pl-5" disabled>
+                                        {/* {(this.state.pages >= 0)?
+                                        <>
+                                            Data not found
+                                        </>
+                                        :
+                                        (this.state.pages === 1)?
+                                        <>
+                                            1
+                                        </>
+                                        :
+                                        <>
+                                            {this.state.page} from {this.state.pages} 
+                                        </>
+                                        }     */}
+                                        {this.state.page} from {this.state.pages}
+                                        </Button>
                                         <Button variant="dark" onClick={(e) => {this.page(e.target.name)}} name="next">Next</Button>
                                     </ButtonGroup>
-                                 </Col> 
+                                 </Col>
+                                 <hr></hr>
+                                 <Row>
+                                    <Col className="mt-4 ml-4">
+                                    <strong>
+                                        {/* {(this.state.total >= 0)?
+                                            <>
+                                                Data not found
+                                            </>
+                                            :
+                                            <>
+                                                {this.state.total} results 
+                                            </>
+                                        } */}
+                                        {this.state.total} results
+                                    </strong>  
+                                    </Col> 
+                                 </Row>
                             </Form.Row>
                     </Card>
                 <Cards list= {this.state.engineersList}/>
