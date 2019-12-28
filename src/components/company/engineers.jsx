@@ -7,6 +7,7 @@ import getJwt from '../../helpers/jwt'
 import { Row, ButtonGroup, Button, DropdownButton, Col, Card, Form, InputGroup, FormControl } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import "../../styles/engineer/engineers.css"
 
 export default class Engineers extends Component{
     constructor(){
@@ -50,10 +51,20 @@ export default class Engineers extends Component{
         this.setData( this.state.searchName, this.state.searchSkill, this.state.sort_by, e, this.state.limit, this.state.page)
     }
 
+    // limit = (e) => {
+    //     console.log(e, "eeeeee")
+    //     this.setState({limit: e})
+    //     this.setData( this.state.searchName, this.state.searchSkill, this.state.sort_by, this.state.order, 'limit='+e, this.state.page)
+    // }
+
     limit = (e) => {
-        // console.log(e, "eeeeee")
-        this.setState({limit: e})
-        this.setData( this.state.searchName, this.state.searchSkill, this.state.sort_by, this.state.order, e, this.state.page)
+        console.log("fffffffffff")
+        if(e === 'minus'){
+            this.setState({limit: this.state.limit-1})
+        }else if(e === 'plus'){
+            this.setState({limit: this.state.limit+1})
+        }
+        this.setData( this.state.searchName, this.state.searchSkill, this.state.sort_by, this.state.order, this.state.limit, this.state.page)
     }
 
     page = (e) => {
@@ -65,6 +76,7 @@ export default class Engineers extends Component{
         }
         this.setData( this.state.searchName, this.state.searchSkill, this.state.sort_by, this.state.order, this.state.limit, this.state.page)
     }
+
 
     getEngineers(url){
         const jwt = getJwt()
@@ -103,9 +115,9 @@ export default class Engineers extends Component{
                             <Form.Row  className="m-4">
                                 <InputGroup as={Col} md="4">
                                     <InputGroup.Prepend>
-                                        <InputGroup.Text><FontAwesomeIcon icon={faSearch} /></InputGroup.Text>
+                                        <InputGroup.Text id="searchbarskill"><FontAwesomeIcon icon={faSearch} /></InputGroup.Text>
                                     </InputGroup.Prepend>
-                                    <FormControl onChange={(e) => {this.searchSkill(e.target.value)}} type="text" placeholder="Search by Skill" id="searchbar" />
+                                    <FormControl onChange={(e) => {this.searchSkill(e.target.value)}} type="text" placeholder="Search by Skill"  />
                                 </InputGroup>
                                 <InputGroup as={Col} className="ml-auto">
                                     <DropdownButton variant="dark" id="dropdown-basic-button" title="Sort by">
@@ -121,13 +133,23 @@ export default class Engineers extends Component{
                                         <option onClick={(e) => {this.order(e.target.value)}} value="DESC"> Descending</option>                                    
                                     </DropdownButton>
                                 </InputGroup>
-                                <InputGroup as={Col} className="mr-auto" md="2">
+                                {/* <InputGroup as={Col} className="mr-auto" md="2">
                                     <FormControl onChange={(e) => {this.limit(e.target.value)}} type="text" placeholder="Limit per page" id="searchbar" />
-                                </InputGroup>
-                                 <Col md='4' className="ml-auto">
+                                </InputGroup> */}
+                                {/* <Col md='4' className="ml-auto">
                                     <ButtonGroup>
+                                        <Button variant="dark" onClick={(e) => {this.limit(e.target.name)}} name="minus">-</Button>
+                                        <Button variant="outline-dark" className="pr-5 pl-5" disabled >
+                                        {this.state.limit}
+                                        </Button>
+                                        <Button variant="dark" onClick={(e) => {this.limit(e.target.name)}} name="plus">+</Button>
+                                    </ButtonGroup>
+                                 </Col> */}
+                                 <InputGroup as={Col} className="ml-auto">
+
+                                    <ButtonGroup id="pagebar">
                                         <Button variant="dark" onClick={(e) => {this.page(e.target.name)}} name="prev">Prev</Button>
-                                        <Button variant="outline-dark" className="pr-5 pl-5" disabled>
+                                        <Button variant="outline-dark" disabled id="pagenav">
                                         {/* {(this.state.pages >= 0)?
                                         <>
                                             Data not found
@@ -146,24 +168,14 @@ export default class Engineers extends Component{
                                         </Button>
                                         <Button variant="dark" onClick={(e) => {this.page(e.target.name)}} name="next">Next</Button>
                                     </ButtonGroup>
-                                 </Col>
-                                 <hr></hr>
-                                 <Row>
-                                    <Col className="mt-4 ml-4">
-                                    <strong>
-                                        {/* {(this.state.total >= 0)?
-                                            <>
-                                                Data not found
-                                            </>
-                                            :
-                                            <>
-                                                {this.state.total} results 
-                                            </>
-                                        } */}
-                                        {this.state.total} results
-                                    </strong>  
-                                    </Col> 
-                                 </Row>
+                                 </InputGroup>
+                                 <InputGroup as={Col} className="ml-2">
+                                    <div className="mt-1 ml-2">
+                                        <strong>                                        
+                                            {this.state.total} results
+                                        </strong>  
+                                    </div> 
+                                 </InputGroup>
                             </Form.Row>
                     </Card>
                 <Cards list= {this.state.engineersList}/>

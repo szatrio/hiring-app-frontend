@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'AirbnbCerealBold';
+    src: local('AirbnbCerealBold'), url(../assets/font/AirbnbCerealBold.ttf) format('truetype');
+  }
+
+.text-dark{
+    font-family: AirbnbCerealBold;
+}
+

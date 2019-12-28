@@ -4,6 +4,8 @@ import Cards from './cards'
 import axios from 'axios'
 import getJwt from '../../helpers/jwt'
 
+
+
 export default class Companies extends Component{
     constructor(){
         super()

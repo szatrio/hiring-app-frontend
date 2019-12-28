@@ -4,11 +4,13 @@ import axios from 'axios'
 import whitelogo from '../assets/img/Arkademy-Putih.svg'
 import hirevector from '../assets/img/vector-hiring.png'
 import SweetAlert from 'sweetalert2-react'
+import {Link} from "react-router-dom"
 
 class Register extends Component{
    
-    constructor(){
+    constructor(){       
         super()
+        this.routeChange = this.routeChange.bind(this);
         this.state = {
           email: null,
           password: null,
@@ -17,6 +19,10 @@ class Register extends Component{
         }
       }
     
+    routeChange() {
+        this.props.history.push("/");
+      }
+
     handleRegister(e){
         e.preventDefault()
         const api = 'http://localhost:8000/register'
@@ -64,7 +70,7 @@ class Register extends Component{
                                 show={this.state.show}
                                 title="Registration completed successfully"
                                 text="Go to the login page"
-                                onConfirm={() => this.setState({ show: false })}
+                                onConfirm={this.routeChange}
                             />
                             <div className="form-group">
                                 <label className="text-dark" for="exampleInputEmail1">Email address</label>
@@ -82,11 +88,11 @@ class Register extends Component{
                                 <label className="custom-control-label text-dark" for="customRadioInline1">Company</label>
                             </div>
                             <div className="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="customRadioInline2" name="customRadioInline1" className="custom-control-input" value="2" required></input>
+                                <input type="radio" id="customRadioInline2" name="customRadioInline1" className="custom-control-input" onChange={ (e) => { this.setState({ role: e.target.value })}} value="2" required></input>
                                 <label className="custom-control-label text-dark" for="customRadioInline2">Engineer</label>
                             </div>
                             </div>
-                            <button type="submit" className="btn btn-block text-light p-2 mt-4" id="btn-login">Submit</button>
+                                <button type="submit" className="btn btn-block text-light p-2 mt-4" id="btn-login">Submit</button>
                         </form>
                     </div>
             </div>

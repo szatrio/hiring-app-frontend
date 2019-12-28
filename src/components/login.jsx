@@ -4,6 +4,8 @@ import whitelogo from '../assets/img/Arkademy-Putih.svg'
 import hirevector from '../assets/img/vector-hiring.png'
 import  axios from 'axios'
 import SweetAlert from 'sweetalert2-react'
+import {Link} from 'react-router-dom'
+// import Register from './register'
 
 
 const checkRole = (role, id_user, token, props) =>{
@@ -14,21 +16,22 @@ const checkRole = (role, id_user, token, props) =>{
             if(res.data.data.filter(response => response.id_user === id_user).length > 0 ){
                 props.history.push("/engineers")
             }else{
-                props.history.push("/company/myprofile")
+                props.history.push("/company/addprofile")
             }
         })
         .catch(err =>{
             console.log(err)
         })
     }
+
     else if(role === 2){
         axios.get('http://localhost:8000/engineer', { headers: { Authorization: `Bearer ${token}`}})
         .then( res => {
             console.log(res.data,"zzzzzzzzzzzzzzzzzzzzz")
             if(res.data.response.filter(response => response.id_user === id_user).length > 0 ){
-                props.history.push("/companies")
+                props.history.push("/engineers")
             }else{
-                props.history.push("/engineer/myprofile")
+                props.history.push("/engineer/addprofile")
             }
         })
         .catch(err =>{
@@ -62,7 +65,6 @@ class Login extends Component{
         // console.log("kkkk", data)
         axios.post(api, data)
         .then(res => {
-            this.setState({show: true})
             localStorage.setItem('token', res.data.data.token)
             localStorage.setItem('id_user', res.data.data.id_user)
             localStorage.setItem('email', res.data.data.email)
@@ -72,6 +74,7 @@ class Login extends Component{
             // this.props.history.push("/companies")
         })
         .catch(err =>{
+            this.setState({show: true})
             console.log(err)
         })
     }
@@ -100,8 +103,9 @@ class Login extends Component{
                         <form className="mt-5 ml-4 mr-4 pt-4" method="POST" onSubmit={(e) => this.handleLogin(e)}>
                             <SweetAlert
                                 show={this.state.show}
-                                title="Login Succesfully"
-                                text="Welcome"
+                                title="Login Failed"
+                                icon= "error"
+                                text="Email or password are incorrect"
                                 onConfirm={() => this.setState({ show: false })}
                             />
                             <div className="form-group">
@@ -119,9 +123,15 @@ class Login extends Component{
                             </div>
                             <button type="submit" class="btn btn-block text-light p-2 mt-4" id="btn-login">Login</button>
                         </form>
+                                    
                         <div className="mt-1 ml-4 mr-4 pt-4">
-                            <button href="/" class="btn btn-block p-2 mt-2" id="btn-register">Register</button>
+                                <Link to="/register">
+                                    <button class="btn btn-block p-2 mt-2" id="btn-register">
+                                                Register
+                                    </button>
+                                </Link>
                         </div>
+                                
                     </div>
             </div>
         </div>

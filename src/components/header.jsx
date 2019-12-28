@@ -4,15 +4,28 @@ import arkademy from '../assets/img/arkademy-logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCommentDots, faBell } from '@fortawesome/free-solid-svg-icons'
 import SearchField from './searchfilter'
+// import getJwt from '../helpers/jwt'
+// import { useHistory } from "react-router-dom";
+
+
 class header extends Component{
     
     
+    // handleLogout = () =>{
+    //     // console.log(localStorage)
+    //     // const history = useHistory()
+    //     localStorage.removeItem('token')
+    //     localStorage.removeItem('id_user')
+    //     localStorage.removeItem('email')
+    //   }
+
     setDataFromSearch = (searchData) => {
         this.props.getDataFromHeader(searchData) 
       }
     render(){
-       return(
-        <div>
+       
+        return(
+            <div>
              <nav className="navbar navbar-expand-lg navbar-light bg-light p">
                     <div>    
                         <img src={arkademy} width="100" alt="navbar"></img>
@@ -40,6 +53,7 @@ class header extends Component{
                         <div className="mt-3 ml-4 mr-4">
                             <FontAwesomeIcon icon={faBell} size="lg"/>
                         </div>
+                        {/* <p onClick={this.handleLogout} className="text-dark ml-2 mt-3">Logout</p> */}
                     </div>
              </nav>
              
