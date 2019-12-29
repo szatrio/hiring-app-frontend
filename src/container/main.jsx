@@ -3,10 +3,10 @@ import { Switch, Route} from 'react-router-dom'
 import Login from '../components/login'
 import Register from '../components/register'
 import Engineers from '../components/company/engineers'
-import Companies from '../components/engineer/companies'
 import engProfile from '../components/engineer/engProfile'
 import addCompanyProfile from '../components/company/addCompanyProfile'
 import addEngineerProfile from '../components/engineer/addEngineerProfile'
+import engProject from '../components/engineer/project'
 
 function Main(){
   return(
@@ -18,6 +18,7 @@ function Main(){
       <Route path='/company/addprofile' component={addCompanyProfile} />
       <Route path='/engineer/addprofile' component={addEngineerProfile} />
       <Route path='/engineer/profile' component={engProfile} />
+      <Route path='/engineer/project' component={engProject} />
     </Switch>
   )
 }
