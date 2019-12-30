@@ -1,7 +1,7 @@
 #searchbar{
-  width: 600px;
   box-shadow: none;
   outline: none;
+  width: 400px;
 }
 
 #searchbar:focus{

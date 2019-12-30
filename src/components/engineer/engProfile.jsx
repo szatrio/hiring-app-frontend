@@ -48,7 +48,7 @@ export default class engProfile extends Component{
         console.log(this.state.engineersList.filter(engineer => engineer.id_user == getJwt().id_user),"ini state")
         return(
             <>
-                <Header />
+                <Header history={this.props.history}/>
                 <Row>
                     <Cards list= {this.state.engineersList}/>
                     {this.state.engineersList.filter(engineer => engineer.id_user == getJwt().id_user).map(engineer => (
@@ -96,11 +96,11 @@ export default class engProfile extends Component{
                                 </tr>
                                 <tr>
                                     <td>Date Created</td>
-                                    <td>: {engineer.location}</td>
+                                    <td>: {engineer.date_created}</td>
                                 </tr>
                                 <tr>
                                     <td>Date Updated</td>
-                                    <td>: {engineer.location}</td>
+                                    <td>: {engineer.date_updated}</td>
                                 </tr>
                             </tbody>
                         </Table>

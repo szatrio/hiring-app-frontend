@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import '../../styles/engineer/cards.css'
 import { Row } from 'react-bootstrap'
 
@@ -11,45 +11,52 @@ let img =  ['https://s3-alpha-sig.figma.com/img/e25d/3425/076a46cfbc1efe1dc68f68
 ]
 
 
-const Cards = (props) =>{
-    console.log(props)
-    return(
-        <>
-            <Row className="justify content-center m-4">
-                {props.list.map(engineers => (
-                    <div className="mt-2" key={engineers.id_engineer}>
-                        <div id="cardProfile">
-                            <img src={img[Math.floor(Math.random() * img.length)]} alt="" id="cardImg"/>
-                            <img src="https://dhggywfvre0o8.cloudfront.net/app/uploads/2017/11/22153252/Typeform-Blog-BlackFriday-Cover-AskAwesomely.jpg" alt="" id="black"/>
-                        </div>
-                            <div id="cardBody">
-                            <h5>{engineers.name}</h5>
-                                <p id="desc">{engineers.description}</p>
-                                <Row id="stats">
-                                    <div id="check"></div>
-                                    <p id="statsfont">
-                                        Success Rate
-                                    </p>
-                                    <div id="star"></div>
-                                    <p id="statsfont">
-                                        Success Rate
-                                    </p>
-                                </Row>
-                                <p id="skills">Skills: <br></br>
-                                {(engineers.skills)?
-                                engineers.skills:
-                                <p>
-                                    -
-                                </p>
-                                }
-                                </p>
-                                {/* <a href="/" className="btn btn-primary">Go to Profile</a> */}
+class Cards extends Component{
+
+    selectProfile = (e) =>{ 
+        this.props.getDataFromCard(e)
+      }
+
+    render(){
+        console.log(this.props)
+        return(
+            <>
+                <Row className="justify content-center m-4">
+                    {this.props.list.map(engineers => (
+                        <div className="mt-2" key={engineers.id_engineer}>
+                            <div id="cardProfile" onClick={()=>this.selectProfile(engineers.id_engineer)}>
+                                <img src={img[Math.floor(Math.random() * img.length)]} alt="" id="cardImg"/>
+                                <img src="https://dhggywfvre0o8.cloudfront.net/app/uploads/2017/11/22153252/Typeform-Blog-BlackFriday-Cover-AskAwesomely.jpg" alt="" id="black"/>
                             </div>
-                    </div>
-                ))}
-            </Row>
-        </>
-    )
+                                <div id="cardBody">
+                                <h5>{engineers.name}</h5>
+                                    <p id="desc">{engineers.description}</p>
+                                    <Row id="stats">
+                                        <div id="check"></div>
+                                        <p id="statsfont">
+                                            Success Rate
+                                        </p>
+                                        <div id="star"></div>
+                                        <p id="statsfont">
+                                            Success Rate
+                                        </p>
+                                    </Row>
+                                    <p id="skills">Skills: <br></br>
+                                    {(engineers.skills)?
+                                    engineers.skills:
+                                    <p>
+                                        -
+                                    </p>
+                                    }
+                                    </p>
+                                    {/* <a href="/" className="btn btn-primary">Go to Profile</a> */}
+                                </div>
+                        </div>
+                    ))}
+                </Row>
+            </>
+         )
+    }
 }
 
 export default Cards 

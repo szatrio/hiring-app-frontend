@@ -78,6 +78,10 @@ export default class Engineers extends Component{
     }
 
 
+    getProfile = (e) =>{
+        console.log(e,"ini id engineer")
+    }
+
     getEngineers(url){
         const jwt = getJwt()
         console.log(url,'ini URL')
@@ -109,8 +113,8 @@ export default class Engineers extends Component{
     render(){
         console.log(this.state,"eeeeeeeeeeeee")
         return(
-            <>
-                <Header getDataFromHeader={this.searchName} searchBar={true} />
+            <>getData
+                <Header history={this.props.history} getDataFromHeader={this.searchName} searchBar={true} />
                     <Card className="m-4 text-center"> 
                             <Form.Row  className="m-4">
                                 <InputGroup as={Col} md="4">
@@ -178,7 +182,7 @@ export default class Engineers extends Component{
                                  </InputGroup>
                             </Form.Row>
                     </Card>
-                <Cards list= {this.state.engineersList}/>
+                <Cards list= {this.state.engineersList} getDataFromCard={(e) => this.getProfile(e)}/>
             </>
         )
     }

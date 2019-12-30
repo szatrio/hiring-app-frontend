@@ -32,7 +32,7 @@ class addEngineerProfile extends Component{
         .then(res => {
             // console.log()
             this.setState({id_user: jwt.id_user})
-            this.props.history.push("/companies");
+            this.props.history.push("/engineer/profile");
         })
         .catch(err => {
             console.log(err)
