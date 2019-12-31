@@ -74,33 +74,39 @@ export default class engProject extends Component{
                         <h4>
                             Received Projects
                         </h4>
+                        <div className="ml-auto mb-3 mt-3">
+                            Total : {this.state.projectsList.length}
+                        </div>
+                        <div id="scrollTable">
                     <Table responsive>
-                    <thead>
-                        <tr>
-                            <th>Project Name</th>
-                            <th>Owner</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    {this.state.projectsList.map(p =>(
-                        <tbody key={p.id_engineer == this.state.id_project}>
+
+                        <thead id="theadproject">
                             <tr>
-                                <td>{p.name_project}</td>
-                                <td>{p.company}</td>
-                                <td>{p.status}</td>
-                                <td>
-                                    <Button className="mr-3" variant="success" value="ongoing" onClick={(e)=>{this.replyProject(p, e.target.value)}}>
-                                        Accept
-                                    </Button>
-                                    <Button  variant="danger" value="decline" onClick={(e)=>{this.replyProject(p, e.target.value)}}>
-                                        Decline
-                                    </Button>
-                                </td>
+                                <th>Project Name</th>
+                                <th>Owner</th>
+                                <th>Status</th>
+                                <th>Action</th>
                             </tr>
-                       </tbody>
-                    ))}
+                        </thead>
+                        {this.state.projectsList.map(p =>(
+                            <tbody key={p.id_engineer == this.state.id_project}>
+                                <tr>
+                                    <td>{p.name_project}</td>
+                                    <td>{p.company}</td>
+                                    <td>{p.status}</td>
+                                    <td>
+                                        <Button className="mr-3" variant="success" value="ongoing" onClick={(e)=>{this.replyProject(p, e.target.value)}}>
+                                            Accept
+                                        </Button>
+                                        <Button  variant="danger" value="decline" onClick={(e)=>{this.replyProject(p, e.target.value)}}>
+                                            Decline
+                                        </Button>
+                                    </td>
+                                </tr>
+                        </tbody>
+                        ))}
                     </Table>
+                        </div>
                     </Card>   
             </>
         )

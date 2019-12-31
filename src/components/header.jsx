@@ -43,11 +43,11 @@ class header extends Component{
                                 }
                             </div>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <div className="navbar-nav ml-4 mr-auto">
+                            <div className="navbar-nav ml-2 mr-auto">
                                 <p className="text-dark mt-3">Home</p>
                                 <img src="https://www.pinterpolitik.com/wp-content/uploads/2018/02/Photo-Soekarno.jpg" className="ml-4" alt="" id="profilepic"/>
                                 <p className="text-dark ml-2 mt-3">Nama</p>
-                                <div className="ml-4 mr-4" id="GrayLine"></div>
+                                <div className="ml-3 mr-3" id="GrayLine"></div>
                                 <div className="mt-3 ml-4">
                                     <FontAwesomeIcon icon={faCommentDots} size="lg"/>
                                 </div>

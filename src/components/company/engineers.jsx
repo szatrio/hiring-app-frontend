@@ -79,7 +79,14 @@ export default class Engineers extends Component{
 
 
     getProfile = (e) =>{
-        console.log(e,"ini id engineer")
+        axios.get(`http://localhost:8000/engineer/${e}`, { headers: { Authorization: `Bearer ${getJwt().token}`}})
+        .then((res) =>{
+            this.props.history.push("engineer/detail")
+            
+        })
+        .catch((err)=>
+            console.log(err)
+        )
     }
 
     getEngineers(url){
@@ -113,7 +120,7 @@ export default class Engineers extends Component{
     render(){
         console.log(this.state,"eeeeeeeeeeeee")
         return(
-            <>getData
+            <>
                 <Header history={this.props.history} getDataFromHeader={this.searchName} searchBar={true} />
                     <Card className="m-4 text-center"> 
                             <Form.Row  className="m-4">

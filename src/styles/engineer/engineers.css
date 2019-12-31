@@ -9,3 +9,12 @@
 #pagebar{
     height: 38px;
 }
+
+#scrollTable{
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+#theadproject{
+    position: sticky;
+}

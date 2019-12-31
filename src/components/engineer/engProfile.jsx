@@ -14,6 +14,7 @@ export default class engProfile extends Component{
         super()
         this.state = {
             engineersList: [],
+            skillShow: false,
         }
     }
 
@@ -41,6 +42,20 @@ export default class engProfile extends Component{
                 engineersList : 'not found'
             })
         })
+    }
+
+    formatDate(date) {
+        let d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+    
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+    
+        return [day, month, year].join('-');
     }
 
     render(){
@@ -96,17 +111,17 @@ export default class engProfile extends Component{
                                 </tr>
                                 <tr>
                                     <td>Date Created</td>
-                                    <td>: {engineer.date_created}</td>
+                                    <td>: {this.formatDate(engineer.date_created)}</td>
                                 </tr>
                                 <tr>
                                     <td>Date Updated</td>
-                                    <td>: {engineer.date_updated}</td>
+                                    <td>: {this.formatDate(engineer.date_updated)}</td>
                                 </tr>
                             </tbody>
                         </Table>
                         </Card>          
                     ))}
-                    <Card className="m-4 p-4 text-dark">
+                    <Card className="ml-auto mt-4 mb-4 mr-4 p-4 text-dark">
                         <Button className="mb-2" variant="warning">Update</Button>
                         <Button className="mb-2" variant="success">Skills</Button>
                         <Button className="mb-2" variant="success">Showcase</Button>
