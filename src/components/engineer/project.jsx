@@ -78,7 +78,7 @@ export default class engProject extends Component{
                             Total : {this.state.projectsList.length}
                         </div>
                         <div id="scrollTable">
-                    <Table responsive>
+                    <Table responsive striped bordered hover>
 
                         <thead id="theadproject">
                             <tr>
@@ -95,10 +95,10 @@ export default class engProject extends Component{
                                     <td>{p.company}</td>
                                     <td>{p.status}</td>
                                     <td>
-                                        <Button className="mr-3" variant="success" value="ongoing" onClick={(e)=>{this.replyProject(p, e.target.value)}}>
+                                        <Button className="mr-3" variant="success" value="Ongoing" onClick={(e)=>{this.replyProject(p, e.target.value)}}>
                                             Accept
                                         </Button>
-                                        <Button  variant="danger" value="decline" onClick={(e)=>{this.replyProject(p, e.target.value)}}>
+                                        <Button  variant="danger" value="Decline" onClick={(e)=>{this.replyProject(p, e.target.value)}}>
                                             Decline
                                         </Button>
                                     </td>

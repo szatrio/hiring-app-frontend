@@ -1,4 +1,4 @@
-import { Table, Container, Card, Row, Col, Button, ButtonToolbar } from 'react-bootstrap'
+import { Table, Container, Card, Row, Col, Button,Modal, ButtonToolbar } from 'react-bootstrap'
 import { FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons'
 import Header from '../header'
@@ -7,6 +7,7 @@ import React, { Component } from 'react'
 import "../../styles/detail.css"
 import { connect } from 'react-redux'
 import { engDetail } from '../../public/redux/actions/engineers'
+import { comProject } from '../../public/redux/actions/companyProject'
 
 let img =  ['https://s3-alpha-sig.figma.com/img/e25d/3425/076a46cfbc1efe1dc68f68fd5f13a712?Expires=1578268800&Signature=NQkUerpalaPC279rOaiplDXExR~SJaSRRoSEBVzrzS5WuBc0btOcDx2w8RYR90SPFvoJ1x-JEBKBtWNzA7Ic57pDbId0sX69Ee-vr3fUqI2g88L2B0yu7Eil8n6zp48jwwKUa4erZCmcVNz511YnQzCZQ7Jzg5szqOBMwBNKCpi1koNZmqa-uLOVduHOZr~YzMF6n1OTUPK-TmoQx3KqUklckgSRbpwkrhj9dBkDHFqNHNSei1K-yaGKbLENOv~Rtr2ku0CerffWH98cKZCNJUM1gk~7Nj0egS0SbG1p8PQwkJHn7i6s30QtI-GF-wzcUO5xpgpxb8~Bz57Od-9zIw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA',
 'https://s3-alpha-sig.figma.com/img/6153/3310/b91004aa88b52e2371c260cfd7d67d07?Expires=1578268800&Signature=NJqfL37dH249JcehYImljGLxqEaqkKr1f5X0JxaHjAbQ71Jv6hYkIJUPKPeudJ-WSJeB0IPpWwBT8k7GJ0a17RrOX7wyXj6EJXK1qRnET2WvSd7tW6I6z1yWaqswF5XHngfT~BZ~PsIrkq3eyCt-Of37e7d5B1tz9K5uADRtJRUOcAXPSZQ6Lf4Oel-ZQF-oaoCQs-GrC4OnHhNrBpb3PUJjtc5GEL1QoV5TeyM8wdPk-KFEvCyE9y7zPNTP15sR~Tre~1uZ~MOwbYHeYX5m4A74SE~UAd-bB8p4LavWaTWNNlMjHX0F0HXQGmOGCz2tXd0E5hOHYYe7oBwxIbHE4A__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA',
@@ -18,11 +19,19 @@ let img =  ['https://s3-alpha-sig.figma.com/img/e25d/3425/076a46cfbc1efe1dc68f68
 
 class EngineerProfile extends Component {
 
-    
+    constructor(){
+        super()
+        this.state = {
+            hireShow: false,
+            
+        }
+    }
 
     componentDidMount(){
         // this.engineerProfile(process.env.REACT_APP_BASE_URL+``+this.props.match.params.id_engineer)
         this.props.dispatch(engDetail(this.props.match.params.id_engineer))
+        this.props.dispatch(comProject())
+
         // console.log(this.props,"ini props detail")
         // console.log(this.state,"ini state detail")
     }
@@ -31,13 +40,52 @@ class EngineerProfile extends Component {
         return name.toString().join(" ")
     }
 
+    handleShow=()=>{
+        this.setState({
+            hireShow: true,
+        })
+    }
+
+    handleClose=()=>{
+        this.setState({
+            hireShow: false
+        })
+    }
+
     render() {
         console.log(this.props,"ini props detail")
         console.log(this.state,"ini state detail")
         let eng = this.props.engineer.engineer
+        let projects = this.props.companyProject.projects.filter(e => e.id_engineer == undefined)
         return (
             <>
             <Header history={this.props.history}/>
+                <Modal show={this.state.hireShow} onHide={this.handleClose}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Select your project</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                    <Table responsive striped bordered hover>
+                            <thead id="theadproject">
+                                <tr>
+                                    <th>Project Name</th>
+                                </tr>
+                            </thead>
+                            {projects.map(p =>(
+                                <tbody key={p.id_project}>
+                                    <tr>
+                                        <td>{p.name_project}</td>
+                                    </tr>
+                            </tbody>
+                            ))} 
+                            </Table>
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={this.handleClose}>
+                        Close
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
                 <div id="coverdetail">
                     <Container className="m-4">
                         <Row>    
@@ -46,10 +94,7 @@ class EngineerProfile extends Component {
                                     <img src={img[Math.floor(Math.random() * img.length)]} alt="" id="cardImg"/>                            
                                 </div>
                                 <div id="bottomOfPp">
-                                    <p>
-                                        @{(eng.name)}
-                                    </p>
-                                    <Button variant="light" id="hireme">
+                                    <Button variant="light" id="hireme" onClick={this.handleShow}>
                                         Hire Me
                                     </Button>
                                 </div>
@@ -81,12 +126,13 @@ class EngineerProfile extends Component {
         )
     }
 }
-const mapStateToProps = state => (
-    {
-    engineer: state.engineers
+const mapStateToProps = state => ({
+    engineer: state.engineers,
+    companyProject: state.companyProject
 })
 
 const mapDispatchToProps = dispatch => ({
+    comProject,
     engDetail,
     dispatch                
  })

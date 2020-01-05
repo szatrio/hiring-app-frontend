@@ -31,36 +31,28 @@ class companyProject extends Component{
                                     <div className="ml-auto mb-3 mt-3 mr-3">
                                         <Link to="/company/project/add">
                                             <Button variant="success">
-                                                Add projects
+                                                Add project
                                             </Button>
                                         </Link>
                                     </div>
                             </Row>
                     <div id="scrollTable">
-                    <Table responsive>
+                    <Table responsive striped bordered hover>
 
                         <thead id="theadproject">
                             <tr>
                                 <th>Project Name</th>
                                 <th>Engineer</th>
                                 <th>Status</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         {projects.map(p =>(
-                            <tbody key={p.id_project == projects.id_project}>
+                            <tbody key={p.id_project}>
                                 <tr>
                                     <td>{p.name_project}</td>
-                                    <td>{p.engineer}</td>
+                                    <td>{p.engineer ? p.engineer: <p>No data</p>}</td>
                                     <td>{p.status}</td>
-                                    <td>
-                                        <Button className="mr-3" variant="warning" value="ongoing">
-                                            Edit
-                                        </Button>
-                                        <Button  variant="danger" value="danger" >
-                                            Delete
-                                        </Button>
-                                    </td>
+                                 
                                 </tr>
                         </tbody>
                         ))} 
