@@ -8,50 +8,51 @@ import {Link} from 'react-router-dom'
 // import Register from './register'
 
 
-const checkRole = (role, id_user, token, props) =>{
-    if (role === 1){
-        axios.get('http://localhost:8000/company', { headers: { Authorization: `Bearer ${token}`}})
-        .then( res => {
-            console.log(res.data.data,"zzzzzzzzzzzzzzzzzzzzz")
-            if(res.data.data.filter(response => response.id_user === id_user).length > 0 ){
-                props.history.push("/engineers")
-            }else{
-                props.history.push("/company/addprofile")
-            }
-        })
-        .catch(err =>{
-            console.log(err)
-        })
-    }
-
-    else if(role === 2){
-        axios.get('http://localhost:8000/engineer', { headers: { Authorization: `Bearer ${token}`}})
-        .then( res => {
-            console.log(res.data,"zzzzzzzzzzzzzzzzzzzzz")
-            if(res.data.response.filter(response => response.id_user === id_user).length > 0 ){
-                props.history.push("/engineers")
-            }else{
-                props.history.push("/engineer/addprofile")
-            }
-        })
-        .catch(err =>{
-            console.log(err)
-        })
-    }else{
-      	console.log("error")
-    }
-}
 
 class Login extends Component{
     constructor(){
         super()
         this.state = {
-          email: null,
-          password: null,
-          role: null,
-          show: false
+            email: null,
+            password: null,
+            role: null,
+            show: false
         }
-      }
+    }
+    
+    checkRole(role, id_user, token){
+        if (role === 1){
+            axios.get('http://localhost:8000/company', { headers: { Authorization: `Bearer ${token}`}})
+            .then( res => {
+                // console.log(res.data.data,"zzzzzzzzzzzzzzzzzzzzz")
+                if(res.data.data.filter(response => response.id_user === id_user).length > 0 ){
+                    this.props.history.push("/engineers")
+                }else{
+                    this.props.history.push("/company/addprofile")
+                }
+            })
+            .catch(err =>{
+                console.log(err)
+            })
+        }
+    
+        else if(role === 2){
+            axios.get('http://localhost:8000/engineer', { headers: { Authorization: `Bearer ${token}`}})
+            .then( res => {
+                // console.log(res.data,"zzzzzzzzzzzzzzzzzzzzz")
+                if(res.data.response.filter(response => response.id_user === id_user).length > 0 ){
+                    this.props.history.push("/engineers")
+                }else{
+                    this.props.history.push("/engineer/addprofile")
+                }
+            })
+            .catch(err =>{
+                console.log(err)
+            })
+        }else{
+              console.log("error")
+        }
+    }
 
     
 
@@ -70,7 +71,7 @@ class Login extends Component{
             localStorage.setItem('email', res.data.data.email)
             localStorage.setItem('role', res.data.data.role)
             // console.log(localStorage,"aaaaaaaaaaaaaa")
-            checkRole(res.data.data.role, res.data.data.id_user, res.data.data.token, this.props)
+            this.checkRole(res.data.data.role, res.data.data.id_user, res.data.data.token)
             // this.props.history.push("/companies")
         })
         .catch(err =>{

@@ -9,7 +9,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import "../../styles/engineer/engineers.css"
 
-export default class Engineers extends Component{
+import { connect } from 'react-redux'
+
+
+class Engineers extends Component{
     constructor(){
         super()
         this.state = {
@@ -21,12 +24,14 @@ export default class Engineers extends Component{
             order: 'ASC',
             searchName: '',
             searchSkill: '',
-            limit: 5
+            limit: 5,
+            id_engProfile: ''
         }
     }
 
     componentDidMount(){
         this.getEngineers('http://localhost:8000/engineer?limit=5&page=1')
+        console.log(this.props,"ini comp")
     }
 
     searchName = (e) => {
@@ -79,14 +84,10 @@ export default class Engineers extends Component{
 
 
     getProfile = (e) =>{
-        axios.get(`http://localhost:8000/engineer/${e}`, { headers: { Authorization: `Bearer ${getJwt().token}`}})
-        .then((res) =>{
-            this.props.history.push("engineer/detail")
-            
-        })
-        .catch((err)=>
-            console.log(err)
-        )
+        // let url = `http://localhost:8000/engineer/${e}` 
+        // { headers: { Authorization: `Bearer ${getJwt().token}`}})
+        this.setState({ id_engProfile : e})
+        this.props.history.push(`/engineer/detail/${e}`)
     }
 
     getEngineers(url){
@@ -101,7 +102,7 @@ export default class Engineers extends Component{
                 total: res.data.total,
                 engineersList : res.data.response,
             })
-            console.log(this.state.pages,"kkkkkkkkkkkjjj")
+            // console.log(this.state.pages,"kkkkkkkkkkkjjj")
         })
         .catch(err =>{
             this.setState({
@@ -118,7 +119,8 @@ export default class Engineers extends Component{
     // console.log(search,"lllllllllll", )
 
     render(){
-        console.log(this.state,"eeeeeeeeeeeee")
+        console.log(this.state,"ini state dari egineers")
+        console.log(this.props,"ini props dari redux")
         return(
             <>
                 <Header history={this.props.history} getDataFromHeader={this.searchName} searchBar={true} />
@@ -177,7 +179,11 @@ export default class Engineers extends Component{
                                         }     */}
                                         {this.state.page} from {this.state.pages}
                                         </Button>
+                                        {this.state.page >= this.state.pages?
+                                        <Button variant="dark" name="next" disabled>Next</Button>
+                                        :
                                         <Button variant="dark" onClick={(e) => {this.page(e.target.name)}} name="next">Next</Button>
+                                        }
                                     </ButtonGroup>
                                  </InputGroup>
                                  <InputGroup as={Col} className="ml-2">
@@ -194,3 +200,14 @@ export default class Engineers extends Component{
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    // let id = ownProps.match.params.id_engineer
+    return{
+        engineers: state.engineers 
+    }
+  }
+
+
+
+export default connect(mapStateToProps)(Engineers)

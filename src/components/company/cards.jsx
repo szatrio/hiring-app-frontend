@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import '../../styles/engineer/cards.css'
 import { Row } from 'react-bootstrap'
-
+import { connect } from 'react-redux'
 
 let img =  ['https://s3-alpha-sig.figma.com/img/e25d/3425/076a46cfbc1efe1dc68f68fd5f13a712?Expires=1578268800&Signature=NQkUerpalaPC279rOaiplDXExR~SJaSRRoSEBVzrzS5WuBc0btOcDx2w8RYR90SPFvoJ1x-JEBKBtWNzA7Ic57pDbId0sX69Ee-vr3fUqI2g88L2B0yu7Eil8n6zp48jwwKUa4erZCmcVNz511YnQzCZQ7Jzg5szqOBMwBNKCpi1koNZmqa-uLOVduHOZr~YzMF6n1OTUPK-TmoQx3KqUklckgSRbpwkrhj9dBkDHFqNHNSei1K-yaGKbLENOv~Rtr2ku0CerffWH98cKZCNJUM1gk~7Nj0egS0SbG1p8PQwkJHn7i6s30QtI-GF-wzcUO5xpgpxb8~Bz57Od-9zIw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA',
 'https://s3-alpha-sig.figma.com/img/6153/3310/b91004aa88b52e2371c260cfd7d67d07?Expires=1578268800&Signature=NJqfL37dH249JcehYImljGLxqEaqkKr1f5X0JxaHjAbQ71Jv6hYkIJUPKPeudJ-WSJeB0IPpWwBT8k7GJ0a17RrOX7wyXj6EJXK1qRnET2WvSd7tW6I6z1yWaqswF5XHngfT~BZ~PsIrkq3eyCt-Of37e7d5B1tz9K5uADRtJRUOcAXPSZQ6Lf4Oel-ZQF-oaoCQs-GrC4OnHhNrBpb3PUJjtc5GEL1QoV5TeyM8wdPk-KFEvCyE9y7zPNTP15sR~Tre~1uZ~MOwbYHeYX5m4A74SE~UAd-bB8p4LavWaTWNNlMjHX0F0HXQGmOGCz2tXd0E5hOHYYe7oBwxIbHE4A__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA',
@@ -18,7 +18,7 @@ class Cards extends Component{
       }
 
     render(){
-        console.log(this.props)
+        console.log(this.props,"ini props kartu")
         return(
             <>
                 <Row className="justify content-center m-4">
@@ -59,4 +59,10 @@ class Cards extends Component{
     }
 }
 
-export default Cards 
+const mapStateToProps = state => (
+    {
+        engineers: state.engineers
+    }
+  )
+
+export default connect(mapStateToProps)(Cards) 
