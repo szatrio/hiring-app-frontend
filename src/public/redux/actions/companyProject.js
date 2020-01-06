@@ -23,4 +23,10 @@ export const addComProject = (data) => {
   axios.post(url, data, { headers: { Authorization: `Bearer ${getJwt().token}`, headers: getJwt().id_user}})
 }
 
+export const updateComProject = (data, id_project) => {
+  console.log(data," ini data hire engineer")
+  console.log(url,"ini rl di actio")
+  axios.patch(url+id_project, data, { headers: { Authorization: `Bearer ${getJwt().token}`, headers: getJwt().id_user}})
+}
+
 export default comProject

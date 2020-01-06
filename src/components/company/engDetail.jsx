@@ -7,7 +7,7 @@ import React, { Component } from 'react'
 import "../../styles/detail.css"
 import { connect } from 'react-redux'
 import { engDetail } from '../../public/redux/actions/engineers'
-import { comProject } from '../../public/redux/actions/companyProject'
+import { comProject, updateComProject } from '../../public/redux/actions/companyProject'
 
 let img =  ['https://s3-alpha-sig.figma.com/img/e25d/3425/076a46cfbc1efe1dc68f68fd5f13a712?Expires=1578268800&Signature=NQkUerpalaPC279rOaiplDXExR~SJaSRRoSEBVzrzS5WuBc0btOcDx2w8RYR90SPFvoJ1x-JEBKBtWNzA7Ic57pDbId0sX69Ee-vr3fUqI2g88L2B0yu7Eil8n6zp48jwwKUa4erZCmcVNz511YnQzCZQ7Jzg5szqOBMwBNKCpi1koNZmqa-uLOVduHOZr~YzMF6n1OTUPK-TmoQx3KqUklckgSRbpwkrhj9dBkDHFqNHNSei1K-yaGKbLENOv~Rtr2ku0CerffWH98cKZCNJUM1gk~7Nj0egS0SbG1p8PQwkJHn7i6s30QtI-GF-wzcUO5xpgpxb8~Bz57Od-9zIw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA',
 'https://s3-alpha-sig.figma.com/img/6153/3310/b91004aa88b52e2371c260cfd7d67d07?Expires=1578268800&Signature=NJqfL37dH249JcehYImljGLxqEaqkKr1f5X0JxaHjAbQ71Jv6hYkIJUPKPeudJ-WSJeB0IPpWwBT8k7GJ0a17RrOX7wyXj6EJXK1qRnET2WvSd7tW6I6z1yWaqswF5XHngfT~BZ~PsIrkq3eyCt-Of37e7d5B1tz9K5uADRtJRUOcAXPSZQ6Lf4Oel-ZQF-oaoCQs-GrC4OnHhNrBpb3PUJjtc5GEL1QoV5TeyM8wdPk-KFEvCyE9y7zPNTP15sR~Tre~1uZ~MOwbYHeYX5m4A74SE~UAd-bB8p4LavWaTWNNlMjHX0F0HXQGmOGCz2tXd0E5hOHYYe7oBwxIbHE4A__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA',
@@ -52,6 +52,20 @@ class EngineerProfile extends Component {
         })
     }
 
+    handleSelectProject(i){
+        // e.preventDefault()
+        const project = this.props.companyProject.projects.filter(f=> f.id_project == i)[0]
+        console.log(project,"ini name project")
+        const data = {
+            name_project: project.name_project,
+            status: 'Sent',
+            id_company: project.id_company,
+            id_engineer: this.props.engineer.engineer.id_engineer,
+        } 
+        this.props.updateComProject(data, i)
+        this.props.history.push("/company/project/")
+    }
+
     render() {
         console.log(this.props,"ini props detail")
         console.log(this.state,"ini state detail")
@@ -72,7 +86,7 @@ class EngineerProfile extends Component {
                                 </tr>
                             </thead>
                             {projects.map(p =>(
-                                <tbody key={p.id_project}>
+                                <tbody key={p.id_project} onClick={()=>this.handleSelectProject(p.id_project)}>
                                     <tr>
                                         <td>{p.name_project}</td>
                                     </tr>
@@ -132,6 +146,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+    updateComProject,
     comProject,
     engDetail,
     dispatch                

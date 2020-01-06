@@ -4,8 +4,10 @@ import arkademy from '../assets/img/arkademy-logo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCommentDots, faBell } from '@fortawesome/free-solid-svg-icons'
 import SearchField from './searchfilter'
+import getLocal from '../helpers/jwt'
+import { DropdownButton, Dropdown} from 'react-bootstrap'
 // import getJwt from '../helpers/jwt'
-// import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 class header extends Component{
@@ -20,7 +22,8 @@ class header extends Component{
         this.props.getDataFromHeader(searchData) 
       }
     render(){
-
+        let local = getLocal()
+        console.log(local, "ii local")
         return(
             <div>
              <nav className="navbar navbar-expand-lg navbar-light bg-light p">
@@ -46,7 +49,30 @@ class header extends Component{
                             <div className="navbar-nav ml-2 mr-auto">
                                 <p className="text-dark mt-3">Home</p>
                                 <img src="https://www.pinterpolitik.com/wp-content/uploads/2018/02/Photo-Soekarno.jpg" className="ml-4" alt="" id="profilepic"/>
-                                <p className="text-dark ml-2 mt-3">Nama</p>
+                            <DropdownButton className="text-dark ml-2 mt-2" variant="light" id="dropdown-basic-button" title={local.email}>
+                                {local.role == 1 ?
+                                (
+                                    <>
+                                        <Link to="/company/project">
+                                            <Dropdown.Item href="#/action-1">My Project</Dropdown.Item>
+                                        </Link>
+                                    </>
+                                ):(
+                                    <>
+                                        <Link to="/engineer/profile">
+                                            <Dropdown.Item href="#/action-1">My Profile</Dropdown.Item>
+                                        </Link>
+                                        <Link to="/engineer/project">
+                                            <Dropdown.Item href="#/action-2">My Project</Dropdown.Item>
+                                        </Link>
+                                    </>
+                                )
+                                }
+                                <Dropdown.Divider />
+                                        <Dropdown.Item href="#/action-3" onClick={this.handleLogout}>
+                                            Logout
+                                        </Dropdown.Item>
+                            </DropdownButton>
                                 <div className="ml-3 mr-3" id="GrayLine"></div>
                                 <div className="mt-3 ml-4">
                                     <FontAwesomeIcon icon={faCommentDots} size="lg"/>
@@ -54,7 +80,7 @@ class header extends Component{
                                 <div className="mt-3 ml-4 mr-4">
                                     <FontAwesomeIcon icon={faBell} size="lg"/>
                                 </div>
-                                <p onClick={this.handleLogout} className="text-dark ml-2 mt-3">Logout</p>
+                                {/* <p onClick={this.handleLogout} className="text-dark ml-2 mt-3">Logout</p> */}
                             </div>
                         </div>
              </nav>

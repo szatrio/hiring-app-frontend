@@ -95,7 +95,7 @@ export default class engProject extends Component{
                                     <td>{p.company}</td>
                                     <td>{p.status}</td>
                                     <td>
-                                        <Button className="mr-3" variant="success" value="Ongoing" onClick={(e)=>{this.replyProject(p, e.target.value)}}>
+                                        <Button className="mr-3" variant="success" value="Complete" onClick={(e)=>{this.replyProject(p, e.target.value)}}>
                                             Accept
                                         </Button>
                                         <Button  variant="danger" value="Decline" onClick={(e)=>{this.replyProject(p, e.target.value)}}>
