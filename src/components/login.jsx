@@ -66,10 +66,16 @@ class Login extends Component{
         // console.log("kkkk", data)
         axios.post(api, data)
         .then(res => {
+            console.log(res, "ini ress")
             localStorage.setItem('token', res.data.data.token)
             localStorage.setItem('id_user', res.data.data.id_user)
             localStorage.setItem('email', res.data.data.email)
             localStorage.setItem('role', res.data.data.role)
+            if(res.data.data.userEngineer){
+                localStorage.setItem('userEngineer', 'memek')
+            }else{
+                localStorage.setItem('userCompany', JSON.stringify(res.data.data.userCompany))
+            }
             // console.log(localStorage,"aaaaaaaaaaaaaa")
             this.checkRole(res.data.data.role, res.data.data.id_user, res.data.data.token)
             // this.props.history.push("/companies")

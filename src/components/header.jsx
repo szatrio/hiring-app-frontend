@@ -6,7 +6,6 @@ import { faCommentDots, faBell } from '@fortawesome/free-solid-svg-icons'
 import SearchField from './searchfilter'
 import getLocal from '../helpers/jwt'
 import { DropdownButton, Dropdown} from 'react-bootstrap'
-// import getJwt from '../helpers/jwt'
 import { Link } from "react-router-dom";
 
 
@@ -23,7 +22,12 @@ class header extends Component{
       }
     render(){
         let local = getLocal()
-        console.log(local, "ii local")
+        let user = ''
+        if(local.userCompany){
+            user = JSON.parse(local.userCompany)
+        }else{
+            user = JSON.parse(local.userEngineer)
+        }
         return(
             <div>
              <nav className="navbar navbar-expand-lg navbar-light bg-light p">
@@ -34,11 +38,6 @@ class header extends Component{
                             <span class="navbar-toggler-icon"></span>
                         </button>
                             <div className="input-group">
-                                {/* <div className="input-group-prepend">
-                                    <span className="input-group-text" id="basic-addon1">
-                                    <FontAwesomeIcon icon={faSearch} />
-                                    </span>
-                                </div> */}
                                 {this.props.searchBar === true ?
                                 <SearchField getDataFromSearch={this.setDataFromSearch} onChange={this.setDataFromSearch}  />   
                                 :
@@ -49,7 +48,7 @@ class header extends Component{
                             <div className="navbar-nav ml-2 mr-auto">
                                 <p className="text-dark mt-3">Home</p>
                                 <img src="https://www.pinterpolitik.com/wp-content/uploads/2018/02/Photo-Soekarno.jpg" className="ml-4" alt="" id="profilepic"/>
-                            <DropdownButton className="text-dark ml-2 mt-2" variant="light" id="dropdown-basic-button" title={local.email}>
+                            <DropdownButton className="text-dark ml-2 mt-2" variant="light" id="dropdown-basic-button" title={user.name}>
                                 {local.role == 1 ?
                                 (
                                     <>
@@ -80,7 +79,6 @@ class header extends Component{
                                 <div className="mt-3 ml-4 mr-4">
                                     <FontAwesomeIcon icon={faBell} size="lg"/>
                                 </div>
-                                {/* <p onClick={this.handleLogout} className="text-dark ml-2 mt-3">Logout</p> */}
                             </div>
                         </div>
              </nav>

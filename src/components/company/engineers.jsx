@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Header from '../header'
 import Cards from './cards'
-// import Filter from '../filter'
 import axios from 'axios'
 import getJwt from '../../helpers/jwt'
 import { Row, ButtonGroup, Button, DropdownButton, Col, Card, Form, InputGroup, FormControl } from 'react-bootstrap'
@@ -31,7 +30,6 @@ class Engineers extends Component{
 
     componentDidMount(){
         this.getEngineers('http://localhost:8000/engineer?limit=5&page=1')
-        console.log(this.props,"ini comp")
     }
 
     searchName = (e) => {
@@ -45,25 +43,17 @@ class Engineers extends Component{
     }
     
     sort_by = (e) => {
-        // console.log(e, "eeeeee")
         this.setState({sort_by: e})
         this.setData( this.state.searchName, this.state.searchSkill, e, this.state.order, this.state.limit, this.state.page)
     }
 
     order = (e) => {
-        // console.log(e, "eeeeee")
         this.setState({order: e})
         this.setData( this.state.searchName, this.state.searchSkill, this.state.sort_by, e, this.state.limit, this.state.page)
     }
 
-    // limit = (e) => {
-    //     console.log(e, "eeeeee")
-    //     this.setState({limit: e})
-    //     this.setData( this.state.searchName, this.state.searchSkill, this.state.sort_by, this.state.order, 'limit='+e, this.state.page)
-    // }
 
     limit = (e) => {
-        console.log("fffffffffff")
         if(e === 'minus'){
             this.setState({limit: this.state.limit-1})
         }else if(e === 'plus'){
@@ -73,7 +63,6 @@ class Engineers extends Component{
     }
 
     page = (e) => {
-        // console.log(e)
         if(e === 'prev'){
             this.setState({page: this.state.page-1})
         }else if(e === 'next'){
@@ -84,25 +73,20 @@ class Engineers extends Component{
 
 
     getProfile = (e) =>{
-        // let url = `http://localhost:8000/engineer/${e}` 
-        // { headers: { Authorization: `Bearer ${getJwt().token}`}})
         this.setState({ id_engProfile : e})
         this.props.history.push(`/engineer/detail/${e}`)
     }
 
     getEngineers(url){
         const jwt = getJwt()
-        console.log(url,'ini URL')
-        // console.log(jwt,"kkkkkkkkkkkkkkkkkkkkkkkkk")
         axios.get(url, { headers: { Authorization: `Bearer ${jwt.token}`}})
         .then(res =>{
-            console.log("lllllllllllllllllllll", res.data)
             this.setState({
                 pages: res.data.pages,
                 total: res.data.total,
                 engineersList : res.data.response,
             })
-            // console.log(this.state.pages,"kkkkkkkkkkkjjj")
+            
         })
         .catch(err =>{
             this.setState({
@@ -111,27 +95,16 @@ class Engineers extends Component{
         })
     }
 
-    setData = ( searchName, searchSkill, sort_by, order, limit, page ) => {
-        console.log(searchSkill)       
+    setData = ( searchName, searchSkill, sort_by, order, limit, page ) => {      
         this.getEngineers(`http://localhost:8000/engineer?${searchName}&limit=${limit}&page=${page}&${searchSkill}&sort_by=${sort_by}&order=${order}`)
     }
-    // +'&page=1&sort_by='+sort_by+'&order='+order+'&limit='+limit
-    // console.log(search,"lllllllllll", )
 
     render(){
-        console.log(this.state,"ini state dari egineers")
-        console.log(this.props,"ini props dari redux")
         return(
             <>
                 <Header history={this.props.history} getDataFromHeader={this.searchName} searchBar={true} />
                     <Card className="m-4 text-center"> 
                             <Form.Row  className="m-4">
-                                <InputGroup as={Col} md="4">
-                                    <InputGroup.Prepend>
-                                        <InputGroup.Text id="searchbarskill"><FontAwesomeIcon icon={faSearch} /></InputGroup.Text>
-                                    </InputGroup.Prepend>
-                                    <FormControl onChange={(e) => {this.searchSkill(e.target.value)}} type="text" placeholder="Search by Skill"  />
-                                </InputGroup>
                                 <InputGroup as={Col} className="ml-auto">
                                     <DropdownButton variant="dark" id="dropdown-basic-button" title="Sort by">
                                         <option onClick={(e) => {this.sort_by(e.target.value)}} value="date_updated"> Date Updated</option>
@@ -146,37 +119,15 @@ class Engineers extends Component{
                                         <option onClick={(e) => {this.order(e.target.value)}} value="DESC"> Descending</option>                                    
                                     </DropdownButton>
                                 </InputGroup>
-                                {/* <InputGroup as={Col} className="mr-auto" md="2">
-                                    <FormControl onChange={(e) => {this.limit(e.target.value)}} type="text" placeholder="Limit per page" id="searchbar" />
-                                </InputGroup> */}
-                                {/* <Col md='4' className="ml-auto">
-                                    <ButtonGroup>
-                                        <Button variant="dark" onClick={(e) => {this.limit(e.target.name)}} name="minus">-</Button>
-                                        <Button variant="outline-dark" className="pr-5 pl-5" disabled >
-                                        {this.state.limit}
-                                        </Button>
-                                        <Button variant="dark" onClick={(e) => {this.limit(e.target.name)}} name="plus">+</Button>
-                                    </ButtonGroup>
-                                 </Col> */}
                                  <InputGroup as={Col} className="ml-auto">
 
                                     <ButtonGroup id="pagebar">
+                                        {(this.state.page <= 1)?
+                                        <Button variant="dark" name="prev" disabled>Prev</Button>
+                                        :
                                         <Button variant="dark" onClick={(e) => {this.page(e.target.name)}} name="prev">Prev</Button>
+                                        }
                                         <Button variant="outline-dark" disabled id="pagenav">
-                                        {/* {(this.state.pages >= 0)?
-                                        <>
-                                            Data not found
-                                        </>
-                                        :
-                                        (this.state.pages === 1)?
-                                        <>
-                                            1
-                                        </>
-                                        :
-                                        <>
-                                            {this.state.page} from {this.state.pages} 
-                                        </>
-                                        }     */}
                                         {this.state.page} from {this.state.pages}
                                         </Button>
                                         {this.state.page >= this.state.pages?
@@ -202,7 +153,6 @@ class Engineers extends Component{
 }
 
 const mapStateToProps = (state) => {
-    // let id = ownProps.match.params.id_engineer
     return{
         engineers: state.engineers 
     }

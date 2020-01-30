@@ -19,7 +19,7 @@ export default class SearchField extends Component {
             <InputGroup.Prepend>
               <InputGroup.Text><FontAwesomeIcon icon={faSearch} /></InputGroup.Text>
             </InputGroup.Prepend>
-            <FormControl onChange={this.sendData} type="text" placeholder="Search by Name" id="searchbar" />
+            <FormControl onChange={this.sendData} type="text" placeholder="Search by Name or Skill" id="searchbar" />
         </InputGroup>
       </Form>
       </>
