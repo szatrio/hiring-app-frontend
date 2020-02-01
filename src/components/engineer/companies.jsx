@@ -15,7 +15,7 @@ export default class Companies extends Component{
     }
 
     componentDidMount(){
-        this.getCompanies('http://localhost:8000/company')
+        this.getCompanies(`http://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}/company`)
     }
 
     getCompanies(url){

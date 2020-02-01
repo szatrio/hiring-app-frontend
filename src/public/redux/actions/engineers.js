@@ -1,7 +1,7 @@
 import axios from 'axios'
 import getJwt from '../../../helpers/jwt'
 
-let url = `http://localhost:8000/engineer/`
+let url = `http://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}/engineer/`
 
 export const engDetail = e => dispatch => {
     axios.get(url+e, { headers: { Authorization: `Bearer ${getJwt().token}`}})

@@ -17,7 +17,7 @@ class addCompanyProfile extends Component{
     handleCreate(e){
         e.preventDefault()
         const jwt = getJwt()
-        const api = 'http://localhost:8000/company'
+        const api = `http://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}/company`
         const data = {
             name: this.state.name,
             location: this.state.location,

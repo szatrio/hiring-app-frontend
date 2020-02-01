@@ -9,6 +9,7 @@ import {Link} from 'react-router-dom'
 
 
 
+
 class Login extends Component{
     constructor(){
         super()
@@ -22,7 +23,7 @@ class Login extends Component{
     
     checkRole(role, id_user, token){
         if (role === 1){
-            axios.get('http://localhost:8000/company', { headers: { Authorization: `Bearer ${token}`}})
+            axios.get(`http://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}/company`, { headers: { Authorization: `Bearer ${token}`}})
             .then( res => {
                 // console.log(res.data.data,"zzzzzzzzzzzzzzzzzzzzz")
                 if(res.data.data.filter(response => response.id_user === id_user).length > 0 ){
@@ -37,7 +38,7 @@ class Login extends Component{
         }
     
         else if(role === 2){
-            axios.get('http://localhost:8000/engineer', { headers: { Authorization: `Bearer ${token}`}})
+            axios.get(`http://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}/engineer`, { headers: { Authorization: `Bearer ${token}`}})
             .then( res => {
                 // console.log(res.data,"zzzzzzzzzzzzzzzzzzzzz")
                 if(res.data.response.filter(response => response.id_user === id_user).length > 0 ){
@@ -58,7 +59,7 @@ class Login extends Component{
 
     handleLogin(e){
         e.preventDefault()
-        const api = 'http://localhost:8000/user/login'
+        const api = `http://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}/user/login`
         const data = {
             email : this.state.email,
             password : this.state.password,

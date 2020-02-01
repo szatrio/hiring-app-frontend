@@ -25,7 +25,7 @@ class Register extends Component{
 
     handleRegister(e){
         e.preventDefault()
-        const api = 'http://localhost:8000/register'
+        const api = `http://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}/register`
         const data = {
           email: this.state.email,
           password: this.state.password,

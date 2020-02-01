@@ -18,7 +18,7 @@ class addCompanyProject extends Component{
       }
 
     componentDidMount(){
-        Axios.get('http://localhost:8000/company', { headers: { Authorization: `Bearer ${getUser().token}`}})
+        Axios.get(`http://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}/company`, { headers: { Authorization: `Bearer ${getUser().token}`}})
         .then(res=>{
             let id = res.data.data.filter(e => e.id_user == getUser().id_user)[0].id_company
             this.setState({

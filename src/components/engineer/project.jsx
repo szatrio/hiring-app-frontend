@@ -17,7 +17,7 @@ export default class engProject extends Component{
 
     getIdEngineer(){
         const jwt = getJwt()
-        axios.get('http://localhost:8000/engineer', { headers: { Authorization: `Bearer ${jwt.token}`}})
+        axios.get(`http://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}/engineer`, { headers: { Authorization: `Bearer ${jwt.token}`}})
                 .then(eng=>{
                     // console.log(eng.data.response,"ini data engnineer dan jwt user", jwt.id_user)
                     let id = eng.data.response.filter((eng)=> eng.id_user == jwt.id_user)[0].id_user
@@ -33,7 +33,7 @@ export default class engProject extends Component{
     }
 
     componentDidMount(){
-            this.getEngProjects('http://localhost:8000/project')
+            this.getEngProjects(`http://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}/project`)
     }
 
     
@@ -62,7 +62,7 @@ export default class engProject extends Component{
             "id_company":p.id_company,
             "id_engineer":p.id_engineer
         }         
-        axios.patch('http://localhost:8000/project/'+p.id_project, data, { headers: { Authorization: `Bearer ${getJwt().token}`}})
+        axios.patch(`http://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}/project/`+p.id_project, data, { headers: { Authorization: `Bearer ${getJwt().token}`}})
     }
 
     render(){

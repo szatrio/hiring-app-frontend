@@ -29,7 +29,7 @@ class Engineers extends Component{
     }
 
     componentDidMount(){
-        this.getEngineers('http://localhost:8000/engineer?limit=5&page=1')
+        this.getEngineers(`http://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}/engineer?limit=5&page=1`)
     }
 
     searchName = (e) => {
@@ -96,7 +96,7 @@ class Engineers extends Component{
     }
 
     setData = ( searchName, searchSkill, sort_by, order, limit, page ) => {      
-        this.getEngineers(`http://localhost:8000/engineer?${searchName}&limit=${limit}&page=${page}&${searchSkill}&sort_by=${sort_by}&order=${order}`)
+        this.getEngineers(`http://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}/engineer?${searchName}&limit=${limit}&page=${page}&${searchSkill}&sort_by=${sort_by}&order=${order}`)
     }
 
     render(){
