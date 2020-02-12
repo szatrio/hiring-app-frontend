@@ -24,7 +24,6 @@ class Login extends Component{
         if (role === 1){
             axios.get(`http://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}/company`, { headers: { Authorization: `Bearer ${token}`}})
             .then( res => {
-                // console.log(res.data.data,"zzzzzzzzzzzzzzzzzzzzz")
                 if(res.data.data.filter(response => response.id_user === id_user).length > 0 ){
                     this.props.history.push("/engineers")
                 }else{
