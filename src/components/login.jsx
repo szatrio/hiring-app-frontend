@@ -5,7 +5,6 @@ import hirevector from '../assets/img/vector-hiring.png'
 import  axios from 'axios'
 import SweetAlert from 'sweetalert2-react'
 import {Link} from 'react-router-dom'
-// import Register from './register'
 
 
 
@@ -40,7 +39,6 @@ class Login extends Component{
         else if(role === 2){
             axios.get(`http://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}/engineer`, { headers: { Authorization: `Bearer ${token}`}})
             .then( res => {
-                // console.log(res.data,"zzzzzzzzzzzzzzzzzzzzz")
                 if(res.data.response.filter(response => response.id_user === id_user).length > 0 ){
                     this.props.history.push("/engineers")
                 }else{
@@ -64,7 +62,6 @@ class Login extends Component{
             email : this.state.email,
             password : this.state.password,
         }
-        // console.log("kkkk", data)
         axios.post(api, data)
         .then(res => {
             console.log(res, "ini ress")
@@ -73,13 +70,13 @@ class Login extends Component{
             localStorage.setItem('email', res.data.data.email)
             localStorage.setItem('role', res.data.data.role)
             if(res.data.data.userEngineer){
-                localStorage.setItem('userEngineer', 'memek')
+                localStorage.setItem('userEngineer', JSON.stringify(res.data.data.userEngineer))
             }else{
                 localStorage.setItem('userCompany', JSON.stringify(res.data.data.userCompany))
             }
-            // console.log(localStorage,"aaaaaaaaaaaaaa")
+    
             this.checkRole(res.data.data.role, res.data.data.id_user, res.data.data.token)
-            // this.props.history.push("/companies")
+
         })
         .catch(err =>{
             this.setState({show: true})
